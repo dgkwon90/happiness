@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>KDG Home</title>
+	<script>
+		function fastset()
+		{
+			var imei = document.getElementsByName("imei_val")[0].value;
+			var lte_mac = document.getElementsByName("ltemac_val")[0].value;
+			var wimax_mac = document.getElementsByName("wimax_val")[0].value;
+			var result_area = document.getElementsByName("result_txtarea")[0];
+
+			result_area.value = run_set(imei, lte_mac, wimax_mac, result_area.value);
+			console.log(result_area.value);
+		}
+
+		function run_set(imei, lte_mac, wimax_mac, area_value)
+		{
+			var lte_mac_underdash = lte_mac.substr(0,2)+"-"+
+												      lte_mac.substr(2,2)+"-"+
+												      lte_mac.substr(4,2)+"-"+
+												      lte_mac.substr(6,2)+"-"+
+												      lte_mac.substr(8,2)+"-"+
+												      lte_mac.substr(10,2);
+
+			console.log(imei);
+			console.log(lte_mac);
+			console.log(wimax_mac);
+			console.log(lte_mac_underdash);
+			console.log(area_value);
+			area_value.replace(/_in_imei_/g, imei).replace(/_in_lte_mac_underdash_/g, lte_mac_underdash).replace(/_in_wimax_mac_/g, wimax_mac);
+			//area_value.replace(/_in_lte_mac_underdash_/g, lte_mac_underdash);
+			//area_value.replace(/_in_wimax_mac_/g, wimax_mac);
+
+			return area_value;
+		}
+	</script>
+</head>
+<body>
+	<header>
+		<h1><a href="http://localhost/">KDG Home</a></h1>
+	</header>
+	<nav>
+		<ol>
+			<li><a href="http://localhost/Util/GDM_IMEI_LTEMAC_WIMAXMAC.html">GDM IMEI/LTEMAC/WIFIMAC Set!</a></li>
+		</ol>
+	</nav>
+	<article>
+		<h2>GDM IMEI LTMAC WIFIMAC 빨리 설정하기</h2>
+		IMEI 입력 : <input type="text" name="imei_val"><br>
+		LTMAC 입력 : <input type="text" name="ltemac_val"><br>
+		WIMAXMAC 입력 : <input type="text" name="wimax_val"><br>
+		<button type="button" onclick="fastset()"> 설정 </button>
+		<h2>결과</h2>
+		<textarea rows="20" cols="100" name="result_txtarea">
+--- IMEI LTEMAC Set Command---
+ucm_if dm_en 1
+ucm_if imei _in_imei_
+ucm_if mac _in_lte_mac_underdash_
+--- WiMAX MAC Set Command ---
+run_cm -s &
+wdm
+nv3 v.info
+nv3 s.info macaddr 0x_in_wimax_mac_
+nv3 w.info macaddr 0x_in_wimax_mac_
+nv3 v.info
+--- Certi Command ---
+cat /tmp/_in_wimax_mac__cer.pem > /tmp/_in_wimax_mac_.pem
+cat /tmp/_in_wimax_mac__pvt.pem >> /tmp/_in_wimax_mac_.pem
+nv -i w dev B /tmp/_in_wimax_mac_.pem
+nv -i w cca B /tmp/wimax_moda_sub_combined_ca_v2.0.pem
+nv -i w eap B "0" "0" "MAC@kt.co.kr" "modacom"
+		</textarea>
+	</article>
+</body>
+</html>

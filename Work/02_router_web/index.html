@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Base Web CM</title>
+		<link rel="stylesheet" type="text/css" href="./CSS/main_grid.css">
+		<script src="./JS/util.js"></script>
+	<!--
+		<script src="//cdn.polyfill.io/v1/polyfill.min.js?features=Array.from" async defer></script>
+	-->
+		<script>
+			function supportsImports() {
+				return 'import' in document.createElement('link');
+			}
+
+			function init() {
+				if( supportsImports() )	{
+					newImportHtmlFile("page_nav.html", '#page-nav');
+					newImportHtmlFile("basic-system_summary.html", '#page-article');
+				}
+				else {
+					console.log("Not support!");
+					//polyfill
+				}
+			}
+		</script>
+	</head>
+	<body onload="init()">
+	  <header id="page-header"> Header </header>
+		<nav id="page-nav"></nav>
+		<article id="page-article"></article>
+		<footer id="page-footer"> Footer </footer>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+First Work
+web ui use grid for css.
+and make to use import page_nav and page_aticle. 
+ -->
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Base Web CM</title>
+	<link rel="stylesheet" type="text/css" href="/Work/01_router_web/CSS/grid.css">
+	<link rel="stylesheet" type="text/css" href="/Work/01_router_web/CSS/menu.css">
+	<script>
+		function file_load(filePath, loadContent, saveContent) {
+			console.log(">>> Load file:"+filePath);
+			var link=document.createElement('link');
+			link.rel='import';
+			link.href=filePath;
+			link.onload=function(e) {
+				console.log("load:"+loadContent);
+				var load = link.import.querySelector(loadContent);
+				console.log("save:"+saveContent);
+				var save = document.querySelector(saveContent);
+				save.appendChild(load.cloneNode(true));
+				console.log("Load success! >>>");
+			};
+			document.head.appendChild(link);
+		}
+
+		function supportsImports() {
+			return 'import' in document.createElement('link');
+		}
+
+		function init() {
+			if( supportsImports() )	{
+				file_load("/Work/01_router_web/page_nav.html", '.page-nav-menu', '#page-nav');
+				file_load("/Work/01_router_web/basic_info.html", '.page-article-content', '#page-article');
+				file_load("/Work/01_router_web/basic_info.html", '.page-help-content', '#page-help');
+			}
+			else {
+				console.log("Not support!");
+				//polyfill
+			}
+		}
+	</script>
+</head>
+<body onload="init()">
+  <header id="page-header"> Header </header>
+	<nav id="page-nav"></nav>
+	<article id="page-article"></article>
+	<div id="page-help"></div>
+	<footer id="page-footer"> Footer </footer>
+</body>
+</html>

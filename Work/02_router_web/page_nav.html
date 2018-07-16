@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="./CSS/page_nav_menu.css">
+    <script>
+      function move_page(new_menu_name, page_name)
+      {
+        reImportHtmlFile(new_menu_name, page_name, '#page-article');
+        console.log("move_page : "+current_menu_name);
+      }
+
+      function mouse_over(menu_name)
+      {
+        console.log("over!!!");
+        if(menu_name != current_menu_name) {
+          document.getElementById("menu_"+menu_name).style.borderBottomColor="red";
+        }
+      }
+
+      function mouse_out(menu_name)
+      {
+        console.log("out!!!");
+        if(menu_name != current_menu_name) {
+          document.getElementById("menu_"+menu_name).style.borderBottomColor="black";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <ul class="page-nav-menu-ul">
+      <li class="menu-dropdown-li" onmouseover="mouse_over('basic')" onmouseout="mouse_out('basic')">
+          <a href="javascript:void(0)" class="dropdown-dropbtn" id="menu_basic">Basic</a>
+          <div class="dropdown-content">
+            <a href="#" onClick="move_page('basic', 'system_summary')">System Summary</a>
+            <a href="#" onClick="move_page('basic', 'account_system_setting')">Account & System Setting</a>
+            <a href="#">Time Setting</a>
+            <a href="#">Statistics</a>
+            <a href="#">Sleep setting</a>
+          </div>
+      </li>
+      <li class="menu-dropdown-li">
+        <a href="javascript:void(0)" class="dropdown-dropbtn" id="menu_wireless">Wireless</a>
+        <div class="dropdown-content">
+          <a href="#" onClick="move_page('wireless', 'wireless_setting')">Wireless Setting</a>
+          <a href="#">MAC Filtering</a>
+        </div>
+      </li>
+      <li class="menu-dropdown-li">
+        <a href="javascript:void(0)" class="dropdown-dropbtn" id="menu_wan">Wan</a>
+        <div class="dropdown-content">
+          <a href="#" onClick="move_page('wan', 'roaming_setting')">Roaming Setting</a>
+          <a href="#">USIM & Status Managerment</a>
+          <a href="#">SMS</a>
+          <a href="#">Authentication Setting</a>
+        </div>
+      </li>
+      <li class="menu-dropdown-li">
+        <a href="javascript:void(0)" class="dropdown-dropbtn">Internet</a>
+        <div class="dropdown-content">
+          <a href="#">DHCP Setting</a>
+          <a href="#">DHCP Allocation List</a>
+        </div>
+      </li>
+      <li class="menu-dropdown-li">
+        <a href="javascript:void(0)" class="dropdown-dropbtn">Firewall</a>
+        <div class="dropdown-content">
+          <a href="#">DMZ</a>
+          <a href="#">Port Forwarding</a>
+          <a href="#">MAC/IP/PortFiltering</a>
+          <a href="#">System Firewall</a>
+        </div>
+      </li>
+    </ul>
+  </body>
+</html>
